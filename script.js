@@ -3,159 +3,97 @@ const infoSeguro = document.getElementById("info-seguro");
 const infoSeguradora = document.getElementById("info-seguradora");
 const selectSeguradora = document.getElementById("seguradoras");
 
-selectSeguro.addEventListener("change", () => { 
-    const selectedSeguro = selectSeguro.value;
+const seguroSeguradoraOptions = {
+    "SulAmerica": {
+        seguros: ["Vida", "Odonto", "Saude", "Viagem", "Previdencia", "Capitalizacao", "Investimentos"],
+        link:"https://corretor.sulamericaseguros.com.br/"
+    },
+    "SOMPO":{
+        seguros:["Residencial", "Auto", "Viagem", "Vida", "Empresarial", "AcidentesPessoais"],
+        link:"https://corretor.sompoconsumer.com.br/PortalCorretor_Th/Login.aspx"
+    },
+    "MetLife":{
+        seguros:["Vida", "Auto", "Saude", "Odonto"],
+        link:"https://login.metlife.com.br/login/dynamic/Login.action"
+    },
+    "JuntoSeguros":{
+        seguros:["Auto", "Residencial", "Vida", "Viagem"],
+        link:"https://plataforma.juntoseguros.com/"
+    },
+    "Suhai":{
+        seguros:["Moto", "Caminhao", "Auto"],
+        link:"https://suhaiseguradoracotacao.com.br/login"
+    },
+    "HDI":{
+        seguros:["Auto", "Residencial", "Vida", "Empresarial", "Frota", "Moto"],
+        link:"https://www.hdi.com.br/hdidigital/"
+    },
+    "AIG":{
+        seguros:["Residencial", "Viagem", "AcidentesPessoais"],
+        link:"https://auth1.customerpltfm.aig.com/oauth2/aus187xvth5kQKY1t5d7/v1/authorize?client_id=0oa1ynjzfaF0SlrZp5d7&code_challenge=pL_hNxNcx17Jd4dXyHQP4T2q7GH91s3x4am7WMTJfpY&code_challenge_method=S256&nonce=qj04f29cqELjSbUY5jvJ7lXzJ9OwP6Mnt5QO3qHaRPSYHxrqHiAdrRT7I4dzgj1W&redirect_uri=https%3A%2F%2Fwww-450.aig.com.br%2Fportal%2Flogin%2Fcallback&response_type=code&state=vDMNFCwd8R6xj89LbhQFnSCUQFUeGofGMZqtOoYKEvQZ33V57LLFs3AcEMjkQd6S&scope=brokerportal%20openid%20email" 
+    },
+    "Icatu":{
+        seguros:["Capitalizacao", "Previdencia"],
+        link:"https://portalcorretor.icatuseguros.com.br/casadocorretor/login"
+    },
+    "PreviSul":{
+        seguros:["Vida", "AcidentesPessoais", "Residencial", "Empresarial", "Odonto"],
+        link:"https://acesso.previsul.com.br/Account/Login"
+    },
+    "Zurich":{
+        seguros:["Vida", "Auto", "Viagem"],
+        link:"https://espacoparceiros.zurich.com.br/" 
+    }
+}
 
-    if (selectedSeguro === "0") {
-        infoSeguro.innerHTML = ``
-    } else if (selectedSeguro === "vida") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro de Vida</h2>
-        <ul>
-            <a href="https://corretor.sulamericaseguros.com.br/" target="_blank">SulAmerica</a>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">SOMPO</a>
-            <a href="https://login.metlife.com.br/login/dynamic/Login.action" target="_blank">MetLife</a>
-            <a href="https://plataforma.juntoseguros.com/" target="_blank">Junto Seguros</a>
-        </ul>`;
-    } else if (selectedSeguro === "frota") {
-        infoSeguro.innerHTML =`
-        <h2>Seguro de Frota</h2>
-        <ul>
+selectSeguro.addEventListener("change", () => {
+    const selectedSeguro = selectSeguro.value;
+    const seguradorasComSeguro = [];
+    for (const [seguradora, options] of Object.entries(seguroSeguradoraOptions)) {
+        if (options.seguros.includes(selectedSeguro)) {
+            seguradorasComSeguro.push(seguradora);
+        }
+    }
+
+    const seguro = () => {
+        let seguroArray = ""
+        for (let i = 0; i < seguradorasComSeguro.length; i++) {
+            const seguradora = seguradorasComSeguro[i];
+            const seguradoras = seguroSeguradoraOptions[seguradora]
             
-        </ul>`;
-    } else if (selectedSeguro === "residencial") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Residencial</h2>
-        <ul>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">SOMPO</a>
-            <a href="https://plataforma.juntoseguros.com/" target="_blank">Junto Seguros</a>
-        </ul>`;
-    } else if (selectedSeguro === "auto") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Auto</h2>
-        <ul>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">SOMPO</a>
-            <a href="https://login.metlife.com.br/login/dynamic/Login.action" target="_blank">MetLife</a>
-            <a href="https://plataforma.juntoseguros.com/" target="_blank">Junto Seguros</a>
-        </ul>`;
-    } else if (selectedSeguro === "moto") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Moto</h2>
-        <ul>
-        
-        </ul>`;
-    } else if (selectedSeguro === "caminhao") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Caminhao</h2>
-        <ul>
-        
-        </ul>`;
-    } else if (selectedSeguro === "viagem") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Viagem</h2>
-        <ul>
-            <a href="https://corretor.sulamericaseguros.com.br/" target="_blank">SulAmerica</a>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">SOMPO</a>
-            <a href="https://plataforma.juntoseguros.com/" target="_blank">Junto Seguros</a>
-        </ul>`;
-    } else if (selectedSeguro === "empresarial") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Empresarial</h2>
-        <ul>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">SOMPO</a>
-        </ul>`;
-    } else if (selectedSeguro === "imobiliario") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Imobiliario</h2>
-        <ul>
-        
-        </ul>`;
-    } else if (selectedSeguro === "saude") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Saude</h2>
-        <ul>
-            <a href="https://corretor.sulamericaseguros.com.br/" target="_blank">SulAmerica</a>
-            <a href="https://login.metlife.com.br/login/dynamic/Login.action" target="_blank">MetLife</a>
-        </ul>`;
-    } else if (selectedSeguro === "odonto") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Odonto</h2>
-        <ul>
-            <a href="https://corretor.sulamericaseguros.com.br/" target="_blank">SulAmerica</a>
-            <a href="https://login.metlife.com.br/login/dynamic/Login.action" target="_blank">MetLife</a>
-        </ul>`;
-    } else if (selectedSeguro === "previdencia") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Previdencia</h2>
-        <ul>
-            <a href="https://corretor.sulamericaseguros.com.br/" target="_blank">SulAmerica</a>
-        </ul>`;
-    } else if (selectedSeguro === "capitalizacao") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Capitalizacao</h2>
-        <ul>
-            <a href="https://corretor.sulamericaseguros.com.br/" target="_blank">SulAmerica</a>
-        </ul>`;
-    } else if (selectedSeguro === "investimentos") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Investimentos</h2>
-        <ul>
-            <a href="https://corretor.sulamericaseguros.com.br/" target="_blank">SulAmerica</a>
-        </ul>`;
-    } else if (selectedSeguro === "acidentesPessoais") {
-        infoSeguro.innerHTML = `
-        <h2>Seguro Acidentes Pessoais</h2>
-        <ul>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">SOMPO</a>
-        </ul>`
+            seguroArray += `<a href="${seguradoras.link}" target="_blank">${seguradora}</a>`;
+        }
+        return seguroArray
+    }
+    infoSeguro.innerHTML = `
+        <h2>${selectedSeguro}</h2>
+        <ul>${seguro()}</ul>
+    `;
+    if (selectedSeguro === "0") {
+        infoSeguro.innerHTML=""
     }
 });
 
 selectSeguradora.addEventListener("change", () => {
     const selectedSeguradora = selectSeguradora.value;
+    if (!seguroSeguradoraOptions.hasOwnProperty(selectedSeguradora)) {
+        infoSeguradora.innerHTML = "";
+        return;
+    }
+    const seguradora = seguroSeguradoraOptions[selectedSeguradora];
+    const seguros = seguradora.seguros;
+    const link = seguradora.link;
 
-    if (selectedSeguradora === "0") {
-        infoSeguradora.innerHTML = ``
-    } else if (selectedSeguradora === "sulamerica") {
-        infoSeguradora.innerHTML = `
-        <h2>SulAmerica</h2>
-        <ul>
-            <a href="https://corretor.sulamericaseguros.com.br" target="_blank">Odonto</a>
-            <a href="https://corretor.sulamericaseguros.com.br" target="_blank">Saude</a>
-            <a href="https://corretor.sulamericaseguros.com.br" target="_blank">Viagem</a>
-            <a href="https://corretor.sulamericaseguros.com.br" target="_blank">Previdencia</a>
-            <a href="https://corretor.sulamericaseguros.com.br" target="_blank">Vida</a>
-            <a href="https://corretor.sulamericaseguros.com.br" target="_blank">Capitalizacao</a>
-            <a href="https://corretor.sulamericaseguros.com.br" target="_blank">Investimentos</a>
-        </ul>`;
-    } else if (selectedSeguradora === "sompo") {
-        infoSeguradora.innerHTML = `
-        <h2>SOMPO</h2>
-        <ul>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">Acidentes Pessoais</a>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">Empresarial</a>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">Viagem</a>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">Auto</a>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">Residencial</a>
-            <a href="https://www.minutoseguros.com.br/area-logada/#/" target="_blank">Vida</a>
-        </ul>`;
-    }else if (selectedSeguradora === "metLife") {
-        infoSeguradora.innerHTML = `\
-        <h2>MetLife</h2>
-        <ul>
-            <a href="https://login.metlife.com.br/login/dynamic/Login.action" target="_blank">Vida</a>
-            <a href="https://login.metlife.com.br/login/dynamic/Login.action" target="_blank">Saude</a>
-            <a href="https://login.metlife.com.br/login/dynamic/Login.action" target="_blank">Odonto</a>
-            <a href="https://login.metlife.com.br/login/dynamic/Login.action" target="_blank">Auto</a>
-        </ul>`;
-    }else if (selectedSeguradora === "juntoSeguros") {
-        infoSeguradora.innerHTML = `
-        <h2>Juntos Seguros</h2>
-        <ul>
-            <a href="https://plataforma.juntoseguros.com/" target="_blank">Auto</a>
-            <a href="https://plataforma.juntoseguros.com/" target="_blank">Residencial</a>
-            <a href="https://plataforma.juntoseguros.com/" target="_blank">Vidas</a>
-            <a href="https://plataforma.juntoseguros.com/" target="_blank">Viagem</a>
-        </ul>`
+    const gerarSegurosLinks = () => {
+        let links = "";
+        for (let i = 0; i < seguros.length; i++) {
+            const seguro = seguros[i];
+            links += `<a href="${link}" target="_blank">${seguro}</a>`;
+        }
+        return links;
     };
+
+    infoSeguradora.innerHTML = `
+        <h2>${selectedSeguradora}</h2>
+        <ul>${gerarSegurosLinks()}</ul>`;
 });
